@@ -67,7 +67,7 @@ const cards = [
 ]
 
 const cards2 = [
-  {name: '10', image: 'https://media.giphy.com/media/12b3E4U9aSndxC/giphy.gif'},
+  [{name: '10', image: 'https://media.giphy.com/media/12b3E4U9aSndxC/giphy.gif'}],
 ]
 
 class SwipeCard extends React.Component {
@@ -152,7 +152,7 @@ class SwipeCard extends React.Component {
         if (userData) {
           Object.keys(userData).forEach(function(key) {
             var object = userData[key];
-            var imageUrl = 'https://s3-us-west-2.amazonaws.com/teeupbeta/uploads/test7.png'
+            var imageUrl = 'https://firebasestorage.googleapis.com/v0/b/teeupbeta.appspot.com/o/profileImg.png?alt=media&token=f741f56f-c4b8-49c7-9b9a-88be2adedfce'
             games.push({
               course: object.course,
               day: object.day,
@@ -161,13 +161,13 @@ class SwipeCard extends React.Component {
               gameID: object.gameID,
               players: object.players,
               player1image: imageUrl,
-              player1handicap: '9.0',
+              player1handicap: '0.0',
               player2image: imageUrl,
-              player2handicap: '9.0',
+              player2handicap: '0.0',
               player3image: imageUrl,
-              player3handicap: '9.0',
+              player3handicap: '0.0',
               player4image: imageUrl,
-              player4handicap: '9.0',
+              player4handicap: '0.0',
             });
 
             //Get Player Data from Player List

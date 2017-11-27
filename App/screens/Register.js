@@ -16,7 +16,16 @@ export default class Login extends React.Component {
     var email = this.state.email;
     var password = this.state.password;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(console.log('Success')).catch(function(error) {
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(console.log('Success')).then((user) => {
+      firebase.database().ref('users/' + user.uid).set({
+        username: '',
+        handicap: '0.0',
+        city: '',
+        homecourse: '',
+        url: '',
+        userid: user.uid,
+      });
+    }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;

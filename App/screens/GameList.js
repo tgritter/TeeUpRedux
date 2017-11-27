@@ -42,7 +42,7 @@ class GameList extends React.Component {
     var lng = '-123.172'
 
     var url = 'https://api.swingbyswing.com/v2/courses/search_by_location?lat=' + lat +
-    '&lng=' + lng  + '&radius=' + this.props.gameFilter.radiusValue +
+    '&lng=' + lng  + '&radius=' + this.props.radiusValue +
     '&active_only=yes&hole_count=18&order_by=distance_from_me_miles&from=1&limit=20&access_token=307a7ffd-f771-4d42-944d-c37a2bbdae19';
 
     return url;
@@ -116,7 +116,7 @@ class GameList extends React.Component {
       });
 
       //Filter Games By Date
-      var date = this.props.gameFilter.dateString;
+      var date = this.props.dateString;
       if(date != 'Any'){
         games = games.filter((game) => game.day == date);
       }
@@ -132,6 +132,12 @@ class GameList extends React.Component {
 
 
   pressRow(item){
+
+    const playerInfo = {userid: this.props.userID, image: this.props.userImg, handicap: this.props.userHdc}
+
+    var matchesRef = firebase.database().ref('game');
+    matchesRef.child(item.gameID + '/players/' + this.props.userID).set(playerInfo);
+
     const { navigate } = this.props.navigation;
     navigate('GameRoom', {gameid: item.gameID});
   }
@@ -240,5 +246,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ gameFilter }) => ({ gameFilter });
+const mapStateToProps = (state) => ({
+
+    //Game Filter State
+    radiusValue: state.gameFilter.radiusValue,
+    dateString: state.gameFilter.dateString,
+
+    //User Info State
+    userID: state.userInfo.userID,
+    userImg: state.userInfo.userImg,
+    userHdc: state.userInfo.userHdc,
+
+
+});
+
 export default connect(mapStateToProps)(GameList);

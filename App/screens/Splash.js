@@ -22,7 +22,7 @@ class Splash extends React.Component {
 componentWillMount() {
   firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          console.log('user logged' + user.uid);
+          console.log('user logged' + user.uid); 
           this.getItems(this.itemsRef.child(user.uid));
           const { navigate } = this.props.navigation;
           navigate('Drawer');

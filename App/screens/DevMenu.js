@@ -79,6 +79,11 @@ export default class Main extends React.Component {
         onPress={() => navigate('DrawerOpen')}
         title="Open Drawer"
       />
+      <Button
+        style={styles.menubuttons}
+        onPress={() => navigate('Login')}
+        title="Logout"
+      />
       </View>
     );
   }
