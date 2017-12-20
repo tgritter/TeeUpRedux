@@ -1,5 +1,16 @@
 {
   "expo": {
-    "sdkVersion": "22.0.0"
+    "name": "TeeUpBeta",
+    "icon": "./App/images/logo.png",
+    "version": "1.0.0",
+    "slug": "teeup-beta",
+    "sdkVersion": "22.0.0",
+    "privacy": "unlisted",
+    "ios" : {
+      "bundleIdentifier": "com.teeup.teeupbeta"
+    },
+    "android": {
+      "package": "com.teeup.teeupbeta"
+}
   }
 }

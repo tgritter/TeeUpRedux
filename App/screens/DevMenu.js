@@ -56,11 +56,6 @@ export default class Main extends React.Component {
       />
       <Button
         style={styles.menubuttons}
-        onPress={() => navigate('CourseList')}
-        title="Course List"
-      />
-      <Button
-        style={styles.menubuttons}
         onPress={() => navigate('SwipeCard')}
         title="Swipe Card"
       />
@@ -76,6 +71,31 @@ export default class Main extends React.Component {
       />
       <Button
         style={styles.menubuttons}
+        onPress={() => navigate('GameRoom')}
+        title="Game Room"
+      />
+      <Button
+        style={styles.menubuttons}
+        onPress={() => navigate('Leaderboards')}
+        title="Leaderboards"
+      />
+      <Button
+        style={styles.menubuttons}
+        onPress={() => navigate('CreateTournament')}
+        title="CreateTournament"
+      />
+      <Button
+        style={styles.menubuttons}
+        onPress={() => navigate('TournamentList')}
+        title="TournamentList"
+      />
+      <Button
+        style={styles.menubuttons}
+        onPress={() => navigate('HeaderScrollView')}
+        title="HeaderScrollView"
+      />
+      <Button
+        style={styles.menubuttons}
         onPress={() => navigate('DrawerOpen')}
         title="Open Drawer"
       />
@@ -83,7 +103,7 @@ export default class Main extends React.Component {
         style={styles.menubuttons}
         onPress={() => navigate('Login')}
         title="Logout"
-      />
+        />
       </View>
     );
   }

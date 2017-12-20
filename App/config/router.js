@@ -2,27 +2,106 @@ import React from 'react';
 import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
 
 //Authentication Screens
-import Splash from '../screens/Splash';
-import Login from '../screens/Login';
-import Register from '../screens/Register';
-import Forgot from '../screens/Forgot';
-import ProfileCreate from '../screens/ProfileCreate';
+import Splash from '../screens/auth/Splash';
+import Login from '../screens/auth/Login';
+import Register from '../screens/auth/Register';
+import Forgot from '../screens/auth/Forgot';
+import ProfileCreate from '../screens/auth/ProfileCreate';
 
 //Drawer Nav
 import DevMenu from '../screens/DevMenu';
-import MyProfile from '../screens/MyProfile';
-import UserList from '../screens/UserList';
-import ProfileView from '../screens/ProfileView';
-import CreateGame from '../screens/CreateGame';
-import CourseList from '../screens/CourseList';
-import SwipeCard from '../screens/SwipeCard';
-import GameList from '../screens/GameList';
-import GamesFilter from '../screens/GamesFilter';
-import GameRoom from '../screens/GameRoom';
-import GameRoomData from '../screens/GameRoomData';
-import GameRoomChat from '../screens/GameRoomChat';
-import GameRoomStart from '../screens/GameRoomStart';
 
+//Profile
+import MyProfile from '../screens/profile/MyProfile';
+import UserList from '../screens/profile/UserList';
+import ProfileView from '../screens/profile/ProfileView';
+
+import CreateGame from '../screens/matchmaking/CreateGame';
+import CourseList from '../screens/matchmaking/CourseList';
+import SwipeCard from '../screens/matchmaking/SwipeCard';
+import GameList from '../screens/matchmaking/GameList';
+import GamesFilter from '../screens/matchmaking/GamesFilter';
+
+//GameRoom Screens
+import GameRoomData from '../screens/gameroom/GameRoomData';
+import GameRoomChat from '../screens/gameroom/GameRoomChat';
+import GameRoomStart from '../screens/gameroom/GameRoomStart';
+import HeaderScrollView from '../screens/HeaderScrollView';
+
+//Scorecard Screens
+import Scorecard from '../screens/scorecard/Scorecard'
+import ScorecardFinal from '../screens/scorecard/ScorecardFinal'
+import ScorecardInput from '../screens/scorecard/ScorecardInput'
+import ScorecardMatch from '../screens/scorecard/ScorecardMatch'
+import ScorecardView from '../screens/scorecard/ScorecardView'
+import VerifiedScorecardView from '../screens/scorecard/VerifiedScorecardView'
+
+//Verify
+import Verify from '../screens/verify/Verify'
+
+//Leaderboards
+import Leaderboards from '../screens/leaderboards/Leaderboards'
+
+//Tournaments
+import CreateTournament from '../screens/tournaments/CreateTournament'
+import TournamentList from '../screens/tournaments/TournamentList'
+import TournamentData from '../screens/tournaments/TournamentData'
+import TournamentScores from '../screens/tournaments/TournamentScores'
+import TournamentMessaging from '../screens/tournaments/TournamentMessaging'
+
+export const GameRoomTabs = TabNavigator({
+  GameRoomData: {
+    screen:GameRoomData,
+  },
+  GameRoomChat: {
+    screen:GameRoomChat,
+  },
+  GameRoomStart: {
+    screen: GameRoomStart,
+  },
+}, {
+  tabBarPosition: 'bottom',
+  animationEnabled: true,
+  tabBarOptions: {
+    activeTintColor: '#e91e63',
+  },
+});
+
+export const ScorecardTabs = TabNavigator({
+  ScorecardInput: {
+    screen:ScorecardInput,
+  },
+  ScorecardView: {
+    screen:ScorecardView,
+  },
+  ScorecardMatch: {
+    screen: ScorecardMatch,
+  },
+}, {
+  tabBarPosition: 'bottom',
+  animationEnabled: true,
+  tabBarOptions: {
+    activeTintColor: '#e91e63',
+  },
+});
+
+export const TournamentTabs = TabNavigator({
+  TournamentData: {
+    screen:TournamentData,
+  },
+  TournamentScores: {
+    screen:TournamentScores,
+  },
+  TournamentMessaging: {
+    screen: TournamentMessaging,
+  },
+}, {
+  tabBarPosition: 'bottom',
+  animationEnabled: true,
+  tabBarOptions: {
+    activeTintColor: '#e91e63',
+  },
+});
 
 
 
@@ -50,6 +129,12 @@ import GameRoomStart from '../screens/GameRoomStart';
       screen: UserList,
       navigationOptions: {
         title: 'UserList',
+      },
+    },
+    ProfileView: {
+      screen: ProfileView,
+      navigationOptions: {
+        header: null,
       },
     },
     CreateGame: {
@@ -83,30 +168,68 @@ import GameRoomStart from '../screens/GameRoomStart';
       },
     },
     GameRoom: {
-      screen: GameRoom,
+      screen: GameRoomTabs,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Scorecard: {
+      screen: ScorecardTabs,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    ScorecardFinal: {
+      screen: ScorecardFinal,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Verify: {
+      screen: Verify,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Leaderboards: {
+      screen: Leaderboards,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    VerifiedScorecardView: {
+      screen: VerifiedScorecardView,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    HeaderScrollView: {
+      screen: HeaderScrollView,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    CreateTournament: {
+      screen: CreateTournament,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    TournamentList: {
+      screen: TournamentList,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Tournament: {
+      screen: TournamentTabs,
       navigationOptions: {
         header: null,
       },
     },
     });
 
-    export const GameRoomTabs = TabNavigator({
-      GameRoomData: {
-        screen:GameRoomData,
-      },
-      GameRoomChat: {
-        screen:GameRoomChat,
-      },
-      GameRoomStart: {
-        screen: GameRoomStart,
-      },
-    }, {
-      tabBarPosition: 'bottom',
-      animationEnabled: true,
-      tabBarOptions: {
-        activeTintColor: '#e91e63',
-      },
-    });
+
 
     export const AuthScreens = StackNavigator({
       Splash: {
@@ -139,7 +262,6 @@ import GameRoomStart from '../screens/GameRoomStart';
           header: null,
         },
       },
-
       Drawer: {
         screen: Drawer,
       }

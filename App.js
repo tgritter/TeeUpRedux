@@ -7,11 +7,11 @@ import store from './App/store';
 import { AuthScreens } from './App/config/router.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD1Rov9Jy1XINDDOtqBy_43RcncYpfQ6Qg",
-  authDomain: "teeupbeta.firebaseapp.com",
-  databaseURL: "https://teeupbeta.firebaseio.com",
-  projectId: "teeupbeta",
-  storageBucket: "teeupbeta.appspot.com",
+  apiKey: "AIzaSyB5It-EM89uVqniVRLsz8_BFstIjSmTyx0",
+  authDomain: "teeupbetadev.firebaseapp.com",
+  databaseURL: "https://teeupbetadev.firebaseio.com",
+  projectId: "teeupbetadev",
+  messagingSenderId: "974277223857"
 }
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
