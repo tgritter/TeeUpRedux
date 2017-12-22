@@ -48,7 +48,7 @@ class UserScoreInput extends React.Component {
     scorecardsRef.child(gid + '/scorecards/' + sid + '/controlID').set(uid);
   }
 
-  render() {
+  render() {  
 
   var data = [];
   var scorecards = this.props.gamedata.scorecards;

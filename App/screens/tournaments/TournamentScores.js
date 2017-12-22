@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, Image, View, ListView, TouchableHighlight } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
+import TournamentHeader from '../../components/headers/TournamentHeader'
 
 class TournamentScores extends React.Component {
   constructor(props){
@@ -24,10 +25,6 @@ class TournamentScores extends React.Component {
     this.getItems(this.itemsRef);
   }
 
-  componentDidMount(){
-    this.getItems(this.itemsRef);
-  }
-
   getItems(itemsRef){
 
     itemsRef.on('value',(snap) => {
@@ -36,6 +33,7 @@ class TournamentScores extends React.Component {
         var player = child.val();
         items.push({
           userimage: player.userimage,
+          userid: player.userid,
           r1: player.r1,
           r2: player.r2,
           r3: player.r3,
@@ -51,6 +49,8 @@ class TournamentScores extends React.Component {
 
   pressRow(item){
     console.log("Item Test:" + JSON.stringify(item))
+    const { navigate } = this.props.navigation;
+    navigate('Leaderboards', {tournamentid: this.props.tournamentid, userid: item.userid});
   }
 
   renderRow(item){
@@ -104,6 +104,7 @@ class TournamentScores extends React.Component {
         <ListView
           dataSource={this.state.itemDataSource}
           renderRow={this.renderRow}
+          renderHeader={() => <TournamentHeader />}
           />
       </View>
     );
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center', 
+    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   listContainer: {

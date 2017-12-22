@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, Dimensions, ScrollView, Button } from 'r
 import firebase from 'firebase';
 import {PRIMARY_COLOR} from '../../constants/constants'
 import { connect } from 'react-redux';
-import HoleNumber from '../../components/boxes/HoleNumber' 
+import HoleNumber from '../../components/boxes/HoleNumber'
 
 class ScorecardFinal extends React.Component {
 
@@ -35,8 +35,6 @@ class ScorecardFinal extends React.Component {
 
   componentWillMount(){
     this.getItems(this.itemsRef);
-    console.log('ScorecardIDTEst2:' + this.props.scorecardViewID)
-    console.log('ScorecardIDTEst2:' + this.props.scorecardViewID)
   }
 
   getItems(itemsRef){

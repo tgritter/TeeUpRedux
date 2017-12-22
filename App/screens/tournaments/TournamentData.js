@@ -41,8 +41,16 @@ class TournamentData extends React.Component {
 
   addPlayer(){
     var tournamentsRef = firebase.database().ref('tournaments');
+    var userRef = firebase.database().ref('users/' + this.props.userID + '/tournaments');
+
+    //Add Player to Tournament Players List
     var userInfo = {userid: this.props.userID, userimage: this.props.userImg, username: this.props.userName, userhdc: this.props.userHdc, r1: 1, r2: 2, r3: 3, r4: 4, t: 10};
     tournamentsRef.child('private/' + this.props.tournamentid + '/users/' + this.props.userID).set(userInfo);
+
+    //Add Tournament to User's Tournament List
+    var userTournyInfo = {tournament_id: this.props.tournamentid, tournament_name: this.state.name, current_round: 1, total: 0}
+    userRef.child(this.props.tournamentid).set(userTournyInfo);
+
   }
 
   render() {

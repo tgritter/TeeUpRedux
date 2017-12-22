@@ -1,24 +1,55 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Dimensions, Button, Picker, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Button, Picker, TouchableOpacity, Image, TextInput } from 'react-native';
 import Header from '../../components/Header';
 import {PRIMARY_COLOR} from '../../constants/constants'
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { openTeesModal, courseData, updateScoreInputInfo, updateCurrentHole  } from '../../actions';
+import ModalSelector from 'react-native-modal-selector'
 
 class GameRoomStart extends React.Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       tees: 'Choose Tees',
       holesToPlay: '18',
-      startHole: '1'
+      startHole: '1',
+      tournament: 'Choose Tourny',
+      tList: [],
+      textInputVale: '',
+      tournid: 'test',
+      label: 'test2'
     }
+    this.itemsRef = this.getRef().child('users/' + this.props.userID + '/tournaments');
   }
 
+  getRef(){
+    return firebase.database().ref();
+  }
+
+
   componentWillMount(){
+    this.getItems(this.itemsRef);
     this.loadCourseData();
+  }
+
+  getItems(itemsRef){
+
+    itemsRef.on('value',(snap) => {
+        let items = [];
+        snap.forEach((child) => {
+          items.push({
+            name: child.val().tournament_name,
+            round: child.val().current_round,
+            total: child.val().total,
+            tournamentID: child.val().tournament_id,
+          });
+        });
+      this.setState({
+        tList: items,
+      });
+    });
   }
 
   //Download Course Data from SwingBySwing API
@@ -61,11 +92,18 @@ class GameRoomStart extends React.Component {
   }
 
 
+  addScorecardToGame(playerInfo, key) {
+      var dataRef = firebase.database().ref('scorecards/scorecardData/' + this.props.gameID +'/scorecards/');
+      return new Promise((resolve) => {
+          dataRef.child(key).set(playerInfo);
+          resolve();
+      });
+  };
+
   //Create Scorecard
   onButtonPress() {
 
     var scorecardsRef = firebase.database().ref('scorecards');
-
     //Initial Stroke List
     const strokesList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     var scorecardRef = scorecardsRef.child('scorecardStrokes').push({
@@ -81,7 +119,7 @@ class GameRoomStart extends React.Component {
       endHole = startHole + 8;
     } else {
       if(startHole != 1){
-        endHole = startHole - 1;
+        endHole = startHole - 1; 
       }
     }
     var scoreInputInfo = {startHole: startHole, endHole: endHole, currentTees: this.state.tees};
@@ -118,6 +156,18 @@ class GameRoomStart extends React.Component {
     scorecardsRef.child('scorecardStrokes/' + key + '/course_data').set(courseData);
     const playerInfoLive = {userid: this.props.userID, image: this.props.userImg, handicap: ch, scorecardID: key, teeBox: this.state.tees, controlID: this.props.userID, username: this.props.userName};
 
+    var tournamentsList = this.state.tList;
+    var tid = this.state.tournid;
+    var tobj = {}
+    for(var t in tournamentsList){
+      var tid2 = tournamentsList[t]['tournamentID']
+      if(tid == tid2){
+        tobj = tournamentsList[t]
+      }
+
+    }
+
+    scorecardsRef.child('scorecardStrokes/' + key + '/tournaments/' + tid).set(tobj);
     //Upload Scorecard to Firebase and Navigation to Scorecard Tab
     const { navigate } = this.props.navigation;
     this.addScorecardToGame(playerInfoLive, key).then( () => {
@@ -125,13 +175,7 @@ class GameRoomStart extends React.Component {
       });
   }
 
-  addScorecardToGame(playerInfo, key) {
-      var dataRef = firebase.database().ref('scorecards/scorecardData/' + this.props.gameID +'/scorecards/');
-      return new Promise((resolve) => {
-          dataRef.child(key).set(playerInfo);
-          resolve();
-      });
-  };
+
 
 
   render() {
@@ -139,6 +183,21 @@ class GameRoomStart extends React.Component {
   var holesToPlay = this.getHolesToPlay();
   var tees = this.getTees();
   var startHoles = this.getStartHoles();
+
+  var data = [];
+  var userID = this.props.userID;
+  var tournamentsList = this.state.tList;
+
+  for(var t in tournamentsList){
+    var name = tournamentsList[t]['name']
+    var round = tournamentsList[t]['round']
+    var tid = tournamentsList[t]['tournamentID']
+    var string = name + ' Round ' + round;
+    var tobj = { key: tid, label: string}
+    data.push(tobj)
+
+  }
+
 
     return (
       <View style={styles.container}>
@@ -204,7 +263,20 @@ class GameRoomStart extends React.Component {
         <View style={styles.dateTextContainer}>
           <Text style={styles.sectionText}> Tournaments: </Text>
           <View style={styles.spacer} />
-          <Text style={styles.valueText}> Post To Tournament </Text>
+            <ModalSelector
+              data={data}
+              initValue="Select something yummy!"
+              supportedOrientations={['landscape']}
+              onChange={(option) => this.setState({
+                label: option.label,
+                tournid: option.key
+              })}>
+              <TextInput
+                style={{borderWidth:1, borderColor:'#ccc', padding:10, height:50, width: 100}}
+                editable={false}
+                placeholder="Select something yummy!"
+                value={this.state.label} />
+          </ModalSelector>
         </View>
       </View>
       <Button onPress={this.onButtonPress.bind(this)} title="Create Scorecard"  />

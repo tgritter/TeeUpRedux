@@ -109,8 +109,8 @@ class ScorecardInput extends Component {
     var scorecardsRef = firebase.database().ref('scorecards/scorecardStrokes/');
     var strokes = this.props.strokes;
     //Check If Scorecard Compeleted
-    if(currentHole == endHole){
-
+    if(currentHole == 3){
+ 
       //Get Current Scorecard ID and Navigate to Scorecard Final
       var scorecardID = '';
       Object.keys(scorecards).forEach(function(key) {
